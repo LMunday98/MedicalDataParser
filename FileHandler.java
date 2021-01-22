@@ -1,7 +1,8 @@
 import java.io.BufferedReader;
-import java.io.FileReader;
 import java.io.IOException;
-
+import java.io.File;
+import java.io.FileReader;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 
 public class FileHandler {
@@ -36,8 +37,7 @@ public class FileHandler {
         ParseHeaders(row);
         ParsePatient(row);
       }
-    }
-    catch (IOException e) {
+    } catch (IOException e) {
       e.printStackTrace();
     }
    }
@@ -55,6 +55,32 @@ public class FileHandler {
      for (String data : row) {
 
      }
+   }
+
+   public void WriteFile() {
+     try (PrintWriter writer = new PrintWriter(new File("data/test.csv"))) {
+
+      StringBuilder sb = new StringBuilder();
+
+      BuildString(sb, col_headers);
+      BuildString(sb, col_headers);
+      writer.write(sb.toString());
+
+      System.out.println("done!");
+
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+   }
+
+   private void BuildString(StringBuilder sb, ArrayList<String> data_array) {
+     String prefix = "";
+     for (String data : data_array) {
+      sb.append(prefix);
+      prefix = ", ";
+      sb.append(data);
+     }
+     sb.append('\n');
    }
 
    public void EchoData() {
