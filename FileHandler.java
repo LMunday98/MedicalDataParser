@@ -28,8 +28,6 @@ public class FileHandler {
     this.splitBy = ",";
 
     this.got_headers = false;
-    this.col_headers = new ArrayList<String>();
-
     this.patients = new ArrayList<Patient>();
    }
 
@@ -46,14 +44,14 @@ public class FileHandler {
    }
 
    private void ParseHeaders(String[] row) {
-     for (String data : row) {
-       col_headers.add(data);
-     }
+     Headers headers = new Headers(start_col, row);
+     headers.parseHeaders();
+     col_headers = headers.getHeaders();
    }
 
    private void ParsePatient(String[] row) {
      if (got_headers) {
-       Patient patient = new Patient(start_col, sort_col, row);
+       Patient patient = new Patient(row);
        patient.ParseData();
      } else {
        ParseHeaders(row);
@@ -70,8 +68,6 @@ public class FileHandler {
       BuildString(sb, col_headers);
       writer.write(sb.toString());
 
-      System.out.println("done!");
-
     } catch (IOException e) {
       e.printStackTrace();
     }
@@ -85,11 +81,5 @@ public class FileHandler {
       sb.append(data);
      }
      sb.append('\n');
-   }
-
-   public void EchoData() {
-     for (String data : col_headers) {
-       System.out.println(data);
-     }
    }
 }

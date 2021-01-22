@@ -3,6 +3,5 @@ public class Main {
    FileHandler fh = new FileHandler("Encounterid", "Photograph_Date", "data.csv");
    fh.ParseFile();
    fh.WriteFile();
-   //fh.EchoData();
  }
 }
