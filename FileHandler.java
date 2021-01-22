@@ -15,6 +15,7 @@ public class FileHandler {
   private String splitBy;
 
   private boolean got_headers;
+  private Headers headers;
   private ArrayList<String> col_headers;
 
   private ArrayList<Patient> patients;
@@ -44,14 +45,14 @@ public class FileHandler {
    }
 
    private void ParseHeaders(String[] row) {
-     Headers headers = new Headers(start_col, row);
+     headers = new Headers(start_col, row);
      headers.parseHeaders();
      col_headers = headers.getHeaders();
    }
 
    private void ParsePatient(String[] row) {
      if (got_headers) {
-       Patient patient = new Patient(row);
+       Patient patient = new Patient(row, headers.getInfoIndex(), headers.getmaxIndex(), headers.getRawHeaderIndexes());
        patient.ParseData();
      } else {
        ParseHeaders(row);

@@ -29,7 +29,7 @@ public class Headers {
     calcHeaderIndexes();
     getInfoHeaders();
     formatDataHeaders();
-    echoHeaders();
+    echoFormattedHeaders();
   }
 
   private void getInfoHeaders() {
@@ -95,7 +95,7 @@ public class Headers {
     System.out.println("Max header index: " + maxIndex + "\n");
   }
 
-  private void echoHeaders() {
+  private void echoFormattedHeaders() {
     System.out.println("\n" + "Formatted headers: ");
     for (String header : headers) {
       System.out.println(header);
