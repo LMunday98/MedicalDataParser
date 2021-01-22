@@ -1,2 +1,1 @@
-nullEnum,Sex,DoB,ED_date,LD,GP_num,Ethnicity
-nullEnum,Sex,DoB,ED_date,LD,GP_num,Ethnicity
+nullEnum,Sex,DoB,ED_date,LD,GP_num,Ethnicity,Encounterid,Grading_date,Photograph_Date,Grading_Type,Left_M,Right_M,Left_R,Right_R,LE_Photocoagulation,RE_Photocoagulation,Disease,LE_Quality,RE_Quality,Outcome,risk

@@ -65,7 +65,7 @@ public class FileHandler {
       StringBuilder sb = new StringBuilder();
 
       BuildString(sb, col_headers);
-      BuildString(sb, col_headers);
+      //BuildString(sb, PATIENT DATA);
       writer.write(sb.toString());
 
     } catch (IOException e) {

@@ -6,6 +6,7 @@ public class Headers {
   private String start_col;
   private String[] raw_headers;
   private ArrayList<String> headers;
+  private ArrayList<String> formattedHeaders;
   private ArrayList<Integer> headerCountArray;
   private ArrayList<Integer> rawHeaderIndexes;
 
@@ -17,6 +18,7 @@ public class Headers {
     this.start_col = _start_col;
 
     this.headers = new ArrayList<String>();
+    this.formattedHeaders = new ArrayList<String>();
     this.headerCountArray = new ArrayList<Integer>();
 
     this.infoIndex = 0;
@@ -26,7 +28,7 @@ public class Headers {
   public void parseHeaders() {
     calcHeaderIndexes();
     getInfoHeaders();
-    //getDataHeaders();
+    formatDataHeaders();
     echoHeaders();
   }
 
@@ -36,10 +38,27 @@ public class Headers {
     }
   }
 
-  private void getDataHeaders() {
-      for (int i = infoIndex; i < infoIndex - 1; i++) {
-        headers.add(raw_headers[i]);
+  private void formatDataHeaders() {
+    System.out.println("Raw header indexes: ");
+    for (int headerIndex : rawHeaderIndexes) {
+      System.out.print(headerIndex + " ");
+    }
+
+    int startDataIndex = 0;
+    for (int indexCount : rawHeaderIndexes) {
+      if (indexCount != maxIndex) {
+        startDataIndex = startDataIndex + indexCount;
+      } else {
+        System.out.println("\n" + "Start data index: " + startDataIndex);
+        break;
       }
+    }
+
+    for (int i = startDataIndex; i < startDataIndex + maxIndex; i++ ) {
+      String formattedHeader = raw_headers[i].substring(0, raw_headers[i].length() - 2);
+      headers.add(formattedHeader);
+    }
+
   }
 
   private void calcHeaderIndexes() {
@@ -76,12 +95,9 @@ public class Headers {
   }
 
   private void echoHeaders() {
+    System.out.println("\n" + "Formatted headers: ");
     for (String header : headers) {
       System.out.println(header);
-    }
-
-    for (int headerIndex : rawHeaderIndexes) {
-      System.out.println(headerIndex);
     }
   }
 
