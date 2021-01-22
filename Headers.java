@@ -56,7 +56,7 @@ public class Headers {
 
     for (int j = 0; j < rawHeaderIndexes.size() - 1; j++) {
       for (int i = startDataIndex; i < startDataIndex + maxIndex; i++ ) {
-        String formattedHeader = raw_headers[i].substring(0, raw_headers[i].length() - 2);
+        String formattedHeader = raw_headers[i].substring(0, raw_headers[i].length() - 1) + Integer.toString(j + 1);
         headers.add(formattedHeader);
       }
     }
