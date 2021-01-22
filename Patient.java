@@ -17,23 +17,41 @@ public class Patient {
     this.info_index = _info_index;
     this.max_index = _max_index;
     this.raw_header_indexes = _raw_header_indexes;
+
+    patientInfo = new ArrayList<String>();
   }
 
-  public void parseData() {
-    getInfo();
-    getData();
+  public void parsePatient() {
+    parseInfo();
+    //parseData();
   }
 
-  private void getInfo() {
-
+  private void parseInfo() {
+    for (int i = 0; i < info_index; i++) {
+      patientInfo.add(patient_raw_data[i]);
+    }
   }
 
-  private void getData() {
+  private void parseData() {
 
   }
 
   public void sortData() {
 
+  }
+
+  public ArrayList<String> getPatientData() {
+    ArrayList<String> finalDataArray = new ArrayList<String>();
+
+    for (String info : patientInfo) {
+      finalDataArray.add(info);
+    }
+/*
+    for () {
+
+    }
+*/
+    return finalDataArray;
   }
 
 }

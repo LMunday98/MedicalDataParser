@@ -53,7 +53,9 @@ public class FileHandler {
    private void ParsePatient(String[] row) {
      if (got_headers) {
        Patient patient = new Patient(row, headers.getInfoIndex(), headers.getmaxIndex(), headers.getRawHeaderIndexes());
-       patient.ParseData();
+       patient.parsePatient();
+       //patient.sortData();
+       patients.add(patient);
      } else {
        ParseHeaders(row);
        got_headers = true;
@@ -66,7 +68,11 @@ public class FileHandler {
       StringBuilder sb = new StringBuilder();
 
       BuildString(sb, col_headers);
-      //BuildString(sb, PATIENT DATA);
+
+      for (Patient patient : patients) {
+        BuildString(sb, patient.getPatientData());
+      }
+
       writer.write(sb.toString());
 
     } catch (IOException e) {
