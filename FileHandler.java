@@ -17,6 +17,8 @@ public class FileHandler {
   private boolean got_headers;
   private ArrayList<String> col_headers;
 
+  private ArrayList<Patient> patients;
+
   public FileHandler(String _start_col, String _sort_col, String _file_name) {
     this.start_col = _start_col;
     this.sort_col = _sort_col;
@@ -27,6 +29,8 @@ public class FileHandler {
 
     this.got_headers = false;
     this.col_headers = new ArrayList<String>();
+
+    this.patients = new ArrayList<Patient>();
    }
 
    public void ParseFile() {
@@ -34,7 +38,6 @@ public class FileHandler {
       BufferedReader br = new BufferedReader(new FileReader(file_path));
       while ((line = br.readLine()) != null) {
       String[] row = line.split(splitBy);
-        ParseHeaders(row);
         ParsePatient(row);
       }
     } catch (IOException e) {
@@ -43,17 +46,18 @@ public class FileHandler {
    }
 
    private void ParseHeaders(String[] row) {
-     if (!got_headers) {
-       for (String data : row) {
-         col_headers.add(data);
-       }
-       got_headers = true;
+     for (String data : row) {
+       col_headers.add(data);
      }
    }
 
    private void ParsePatient(String[] row) {
-     for (String data : row) {
-
+     if (got_headers) {
+       Patient patient = new Patient(start_col, sort_col, row);
+       patient.ParseData();
+     } else {
+       ParseHeaders(row);
+       got_headers = true;
      }
    }
 
@@ -74,10 +78,10 @@ public class FileHandler {
    }
 
    private void BuildString(StringBuilder sb, ArrayList<String> data_array) {
-     String prefix = "";
+     String prefix = line;
      for (String data : data_array) {
       sb.append(prefix);
-      prefix = ", ";
+      prefix = splitBy;
       sb.append(data);
      }
      sb.append('\n');
