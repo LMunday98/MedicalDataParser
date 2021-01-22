@@ -81,10 +81,10 @@ public class FileHandler {
    }
 
    private void BuildString(StringBuilder sb, ArrayList<String> data_array) {
-     String prefix = line;
+     String prefix = "";
      for (String data : data_array) {
       sb.append(prefix);
-      prefix = splitBy;
+      prefix = ",";
       sb.append(data);
      }
      sb.append('\n');
