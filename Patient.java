@@ -1,6 +1,7 @@
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
+import java.util.*;
 
 public class Patient {
 
@@ -78,9 +79,23 @@ public class Patient {
 
   public void sortData() {
     System.out.println("Patient row number: " + patientRow);
-    Collections.sort(patientData);
+
+
+
+
+
+    //Collections.sort(patientData, new PatientData.compareTo());
+    Collections.sort(patientData, new Comparator<PatientData>() {
+      public int compare(PatientData o1, PatientData o2) {
+          return o1.getDateTime().compareTo(o2.getDateTime());
+      }
+    });
+
+
+
+
     for (PatientData pd : patientData) {
-      System.out.println(pd.getDateTime());
+      System.out.println("String: " + pd.getStringDate() + ", Conversion: "  + pd.getDateTime());
     }
   }
 
