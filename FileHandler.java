@@ -69,14 +69,18 @@ public class FileHandler {
    }
 
    public void analysis(int consecutiveYears) {
+     ArrayList<Patient> consecPatients = new ArrayList<Patient>();
+
      for (Patient patient : patients) {
        Boolean isConsec = patient.checkConsecutive(consecutiveYears);
        System.out.print(", Is consec " + consecutiveYears + "? " + isConsec + "\n");
-       if (!isConsec) {
-         // if false remove patient
-
+       if (isConsec) {
+         consecPatients.add(patient);
        }
      }
+
+     patients = consecPatients;
+
    }
 
    public void writeFile(String name) {

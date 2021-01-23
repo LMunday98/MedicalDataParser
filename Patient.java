@@ -142,4 +142,8 @@ public class Patient {
     return finalDataArray;
   }
 
+  public String[] getRawData() {
+    return patient_raw_data;
+  }
+
 }
