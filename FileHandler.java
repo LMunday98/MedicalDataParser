@@ -68,8 +68,12 @@ public class FileHandler {
      }
    }
 
-   public void writeFile() {
-     String newFileName = "data/" + getDateTime() + ".csv";
+   public void analysis() {
+     
+   }
+
+   public void writeFile(String name) {
+     String newFileName = "data/" + name + " " + getDateTime() + ".csv";
      try (PrintWriter writer = new PrintWriter(new File(newFileName))) {
 
       StringBuilder sb = new StringBuilder();
