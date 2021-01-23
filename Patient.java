@@ -23,7 +23,7 @@ public class Patient {
 
   public void parsePatient() {
     parseInfo();
-    //parseData();
+    parseData();
   }
 
   private void parseInfo() {
@@ -33,7 +33,16 @@ public class Patient {
   }
 
   private void parseData() {
+    System.out.println();
+    int indexCount = info_index;
+    for (int i = 1; i < raw_header_indexes.size(); i++) {
+      System.out.println("Index count: " + indexCount);
 
+      int lowerIndex = indexCount;
+      int upperIndex = indexCount + raw_header_indexes.get(i) - 1;
+      System.out.println("Cluster index range: " + lowerIndex + " - " + upperIndex);
+      indexCount = upperIndex + 1;
+    }
   }
 
   public void sortData() {
@@ -47,8 +56,11 @@ public class Patient {
       finalDataArray.add(info);
     }
 /*
-    for () {
-
+    for (PatientData dataCluster : patientData) {
+      ArrayList<String> cluster = dataCluster.getDataCluster();
+      for (String sortedData : cluster) {
+        finalDataArray.add(sortedData);
+      }
     }
 */
     return finalDataArray;
