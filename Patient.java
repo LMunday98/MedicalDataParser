@@ -35,15 +35,24 @@ public class Patient {
   private void parseData() {
     System.out.println();
     int indexCount = 0;
+
+    int patientMax = patient_raw_data.length;
+    System.out.println("Patient max: " + patientMax);
+
     for (int i = 0; i < raw_header_indexes.size(); i++) {
-
-
-
       int lower = indexCount;
       int upper = indexCount + raw_header_indexes.get(i) - 1;
 
+      if (upper > patientMax) {
+        break;
+      }
 
       System.out.println("Lower: " + lower + ", Upper: " + upper);
+
+      for (int j = lower; j < upper; j++) {
+        System.out.println(patient_raw_data[j]);
+      }
+
       indexCount = indexCount + raw_header_indexes.get(i);
 
 
