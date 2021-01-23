@@ -4,7 +4,8 @@ public class Main {
    fh.parseFile();
    fh.writeFile("parsed/Parsed");
 
-   fh.analysis(3);
+   int numConsecYears = 3;
+   fh.analysis(numConsecYears);
    fh.writeFile("analysis/Analysis");
  }
 }

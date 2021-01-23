@@ -70,9 +70,11 @@ public class FileHandler {
 
    public void analysis(int consecutiveYears) {
      for (Patient patient : patients) {
-       if (!patient.checkConsecutive(consecutiveYears)) {
+       Boolean isConsec = patient.checkConsecutive(consecutiveYears);
+       System.out.print(", Is consec " + consecutiveYears + "? " + isConsec + "\n");
+       if (!isConsec) {
          // if false remove patient
-         System.out.println(patient.checkConsecutive(consecutiveYears));
+
        }
      }
    }

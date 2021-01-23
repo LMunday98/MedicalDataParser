@@ -90,17 +90,39 @@ public class Patient {
     }
   }
 
-  public boolean checkConsecutive(int consecutiveYears) {
+  public boolean checkConsecutive(int consecLimit) {
+    ArrayList<Integer> years = getYears();
+
+    int consecYearsCount = 1;
+    for (int i = 1; i < years.size(); i++) {
+      if (years.get(i) == years.get(i - 1) + 1) {
+        consecYearsCount++;
+        if (consecYearsCount == consecLimit) {
+          System.out.print("\n" + "Consec years: " + consecYearsCount);
+          return true;
+        }
+      } else {
+        consecYearsCount = 1;
+      }
+    }
+    System.out.print("\n" + "Consec years: " + consecYearsCount);
+    return false;
+  }
+
+  private ArrayList<Integer> getYears() {
+    System.out.print("\n" + "Patient row number: " + patientRow + "\n");
+
     ArrayList<Integer> years = new ArrayList<Integer>();
-    System.out.print("Patient row number: " + patientRow + " - ");
+
     for (PatientData cluster : patientData) {
       String date = cluster.getStringDate();
       String[] dateParts = date.split("/");
       String stringYear = dateParts[2];
+      int intYear = Integer.parseInt(stringYear);
+      years.add(intYear);
       System.out.print(stringYear + " ");
     }
-    System.out.println();
-    return true;
+    return years;
   }
 
   public ArrayList<String> getPatientData() {
