@@ -18,7 +18,6 @@ public class PatientData implements Comparable<PatientData> {
   public void parseDate(int _comparisonIndex) {
     try {
       comparisonDate = new SimpleDateFormat("dd/MM/yyyy").parse(data.get(_comparisonIndex));
-      System.out.println(comparisonDate);
     }
     catch (Exception e) {
      System.out.println(e);

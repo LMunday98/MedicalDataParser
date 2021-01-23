@@ -1,4 +1,6 @@
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Date;
 
 public class Patient {
 
@@ -73,7 +75,10 @@ public class Patient {
   }
 
   public void sortData() {
-    System.out.println(comparison_index);
+    Collections.sort(patientData);
+    for (PatientData pd : patientData) {
+      System.out.println(pd.getDateTime());
+    }
   }
 
   public ArrayList<String> getPatientData() {
