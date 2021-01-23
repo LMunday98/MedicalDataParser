@@ -46,14 +46,14 @@ public class FileHandler {
    }
 
    private void ParseHeaders(String[] row) {
-     headers = new Headers(start_col, row);
+     headers = new Headers(start_col, sort_col, row);
      headers.parseHeaders();
      col_headers = headers.getHeaders();
    }
 
    private void ParsePatient(String[] row) {
      if (got_headers) {
-       Patient patient = new Patient(row, headers.getInfoIndex(), headers.getmaxIndex(), headers.getRawHeaderIndexes());
+       Patient patient = new Patient(row, headers.getInfoIndex(), headers.getmaxIndex(), headers.getComparisonIndex(), headers.getRawHeaderIndexes());
        patient.parsePatient();
        patient.sortData();
        patients.add(patient);

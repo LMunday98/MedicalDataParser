@@ -4,7 +4,9 @@ import java.util.Collections;
 public class Headers {
 
   private String start_col;
+  private String sort_col;
   private String[] raw_headers;
+
   private ArrayList<String> headers;
   private ArrayList<String> formattedHeaders;
   private ArrayList<Integer> headerCountArray;
@@ -12,10 +14,12 @@ public class Headers {
 
   private int infoIndex;
   private int maxIndex;
+  private int comparisonIndex;
 
-  public Headers (String _start_col, String[] _raw_headers) {
-    this.raw_headers = _raw_headers;
+  public Headers (String _start_col, String _sort_col, String[] _raw_headers) {
     this.start_col = _start_col;
+    this.sort_col = _sort_col;
+    this.raw_headers = _raw_headers;
 
     this.headers = new ArrayList<String>();
     this.formattedHeaders = new ArrayList<String>();
@@ -23,10 +27,12 @@ public class Headers {
 
     this.infoIndex = 0;
     this.maxIndex = 0;
+    this.comparisonIndex = 0;
   }
 
   public void parseHeaders() {
     calcHeaderIndexes();
+    calcComparisonIndex();
     getInfoHeaders();
     formatDataHeaders();
     echoFormattedHeaders();
@@ -77,6 +83,15 @@ public class Headers {
     getHeaderIndexes();
   }
 
+  private void calcComparisonIndex() {
+    for (String header : raw_headers) {
+      if (header.contains(sort_col)) {
+        break;
+      }
+      comparisonIndex++;
+    }
+  }
+
   private void addHeader(int curHeader) {
     System.out.println("Header count: " + curHeader + "\n");
     headerCountArray.add(curHeader);
@@ -116,5 +131,9 @@ public class Headers {
 
   public ArrayList<Integer> getRawHeaderIndexes() {
     return rawHeaderIndexes;
+  }
+
+  public int getComparisonIndex() {
+    return comparisonIndex;
   }
 }
