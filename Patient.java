@@ -6,6 +6,7 @@ public class Patient {
 
   // enum, sex, dob, ed_date, ld. gp_num, ethnicity
 
+  private int patientRow;
   private String[] patient_raw_data;
   private int info_index;
   private int max_index;
@@ -15,7 +16,8 @@ public class Patient {
   private ArrayList<String> patientInfo;
   private ArrayList<PatientData> patientData;
 
-  public Patient(String[] _patient_raw_row, int _info_index, int _max_index, int _comparison_index, ArrayList<Integer> _raw_header_indexes) {
+  public Patient(int _patientRow, String[] _patient_raw_row, int _info_index, int _max_index, int _comparison_index, ArrayList<Integer> _raw_header_indexes) {
+    this.patientRow = _patientRow;
     this.patient_raw_data = _patient_raw_row;
     this.info_index = _info_index;
     this.max_index = _max_index;
@@ -75,6 +77,7 @@ public class Patient {
   }
 
   public void sortData() {
+    System.out.println("Patient row number: " + patientRow);
     Collections.sort(patientData);
     for (PatientData pd : patientData) {
       System.out.println(pd.getDateTime());

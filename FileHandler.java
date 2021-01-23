@@ -38,9 +38,11 @@ public class FileHandler {
    public void ParseFile() {
      try {
       BufferedReader br = new BufferedReader(new FileReader(file_path));
+      int patientRow = 1;
       while ((line = br.readLine()) != null) {
         String[] row = line.split(splitBy);
-        ParsePatient(row);
+        ParsePatient(patientRow, row);
+        patientRow++;
       }
       System.out.println();
     } catch (IOException e) {
@@ -54,9 +56,9 @@ public class FileHandler {
      col_headers = headers.getHeaders();
    }
 
-   private void ParsePatient(String[] row) {
+   private void ParsePatient(int patientRow, String[] row) {
      if (got_headers) {
-       Patient patient = new Patient(row, headers.getInfoIndex(), headers.getmaxIndex(), headers.getComparisonIndex(), headers.getRawHeaderIndexes());
+       Patient patient = new Patient(patientRow, row, headers.getInfoIndex(), headers.getmaxIndex(), headers.getComparisonIndex(), headers.getRawHeaderIndexes());
        patient.parsePatient();
        patient.sortData();
        patients.add(patient);
