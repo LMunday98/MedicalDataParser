@@ -38,7 +38,7 @@ public class Patient {
     int indexCount = info_index;
 
     int patientMax = patient_raw_data.length;
-    System.out.println("Patient max: " + patientMax);
+    System.out.print("Patient max: " + patientMax);
 
     for (int i = 1; i < raw_header_indexes.size(); i++) {
 
@@ -51,10 +51,10 @@ public class Patient {
         break;
       }
 
-      System.out.println("Lower: " + lower + ", Upper: " + upper);
+      System.out.print(" (Lower: " + lower + ", Upper: " + upper + ")");
 
       for (int j = lower; j < upper; j++) {
-        System.out.println(patient_raw_data[j]);
+        //System.out.println(patient_raw_data[j]);
         parsedData.add(patient_raw_data[j]);
       }
 

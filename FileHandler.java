@@ -36,9 +36,10 @@ public class FileHandler {
      try {
       BufferedReader br = new BufferedReader(new FileReader(file_path));
       while ((line = br.readLine()) != null) {
-      String[] row = line.split(splitBy);
+        String[] row = line.split(splitBy);
         ParsePatient(row);
       }
+      System.out.println();
     } catch (IOException e) {
       e.printStackTrace();
     }
