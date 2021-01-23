@@ -19,6 +19,7 @@ public class Patient {
     this.raw_header_indexes = _raw_header_indexes;
 
     patientInfo = new ArrayList<String>();
+    patientData = new ArrayList<PatientData>();
   }
 
   public void parsePatient() {
@@ -40,6 +41,8 @@ public class Patient {
     System.out.println("Patient max: " + patientMax);
 
     for (int i = 0; i < raw_header_indexes.size(); i++) {
+      ArrayList<String> parsedData = new ArrayList<String>();
+
       int lower = indexCount;
       int upper = indexCount + raw_header_indexes.get(i) - 1;
 
@@ -51,20 +54,6 @@ public class Patient {
 
       for (int j = lower; j < upper; j++) {
         System.out.println(patient_raw_data[j]);
-      }
-
-      indexCount = indexCount + raw_header_indexes.get(i);
-
-
-
-
-
-
-
-
-      ArrayList<String> parsedData = new ArrayList<String>();
-/*
-      for (int j = lowerIndex; j < upperIndex; j++) {
         parsedData.add(patient_raw_data[j]);
       }
 
@@ -72,9 +61,9 @@ public class Patient {
         parsedData.add("");
       }
 
-      patientData.add(new PatientData(parsedData));
-      */
-
+      PatientData newCluster = new PatientData(parsedData);
+      patientData.add(newCluster);
+      indexCount = indexCount + raw_header_indexes.get(i);
     }
   }
 
@@ -88,14 +77,14 @@ public class Patient {
     for (String info : patientInfo) {
       finalDataArray.add(info);
     }
-/*
+
     for (PatientData dataCluster : patientData) {
       ArrayList<String> cluster = dataCluster.getDataCluster();
       for (String sortedData : cluster) {
         finalDataArray.add(sortedData);
       }
     }
-*/
+
     return finalDataArray;
   }
 
