@@ -4,6 +4,9 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Date;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 
 public class FileHandler {
 
@@ -64,7 +67,8 @@ public class FileHandler {
    }
 
    public void WriteFile() {
-     try (PrintWriter writer = new PrintWriter(new File("data/test.csv"))) {
+     String newFileName = "data/" + getDateTime() + ".csv";
+     try (PrintWriter writer = new PrintWriter(new File(newFileName))) {
 
       StringBuilder sb = new StringBuilder();
 
@@ -79,6 +83,12 @@ public class FileHandler {
     } catch (IOException e) {
       e.printStackTrace();
     }
+   }
+
+   private String getDateTime() {
+    DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+    Date date = new Date();
+    return dateFormat.format(date);
    }
 
    private void BuildString(StringBuilder sb, ArrayList<String> data_array) {
