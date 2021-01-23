@@ -35,16 +35,17 @@ public class Patient {
 
   private void parseData() {
     System.out.println();
-    int indexCount = 0;
+    int indexCount = info_index;
 
     int patientMax = patient_raw_data.length;
     System.out.println("Patient max: " + patientMax);
 
-    for (int i = 0; i < raw_header_indexes.size(); i++) {
+    for (int i = 1; i < raw_header_indexes.size(); i++) {
+
       ArrayList<String> parsedData = new ArrayList<String>();
 
       int lower = indexCount;
-      int upper = indexCount + raw_header_indexes.get(i) - 1;
+      int upper = indexCount + raw_header_indexes.get(i);
 
       if (upper > patientMax) {
         break;
@@ -58,7 +59,7 @@ public class Patient {
       }
 
       if (raw_header_indexes.get(i) != max_index) {
-        parsedData.add("");
+        parsedData.add("NULL");
       }
 
       PatientData newCluster = new PatientData(parsedData);
