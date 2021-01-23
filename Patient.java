@@ -34,14 +34,38 @@ public class Patient {
 
   private void parseData() {
     System.out.println();
-    int indexCount = info_index;
-    for (int i = 1; i < raw_header_indexes.size(); i++) {
-      System.out.println("Index count: " + indexCount);
+    int indexCount = 0;
+    for (int i = 0; i < raw_header_indexes.size(); i++) {
 
-      int lowerIndex = indexCount;
-      int upperIndex = indexCount + raw_header_indexes.get(i) - 1;
-      System.out.println("Cluster index range: " + lowerIndex + " - " + upperIndex);
-      indexCount = upperIndex + 1;
+
+
+      int lower = indexCount;
+      int upper = indexCount + raw_header_indexes.get(i) - 1;
+
+
+      System.out.println("Lower: " + lower + ", Upper: " + upper);
+      indexCount = indexCount + raw_header_indexes.get(i);
+
+
+
+
+
+
+
+
+      ArrayList<String> parsedData = new ArrayList<String>();
+/*
+      for (int j = lowerIndex; j < upperIndex; j++) {
+        parsedData.add(patient_raw_data[j]);
+      }
+
+      if (raw_header_indexes.get(i) != max_index) {
+        parsedData.add("");
+      }
+
+      patientData.add(new PatientData(parsedData));
+      */
+
     }
   }
 
