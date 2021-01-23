@@ -35,13 +35,13 @@ public class FileHandler {
     this.patients = new ArrayList<Patient>();
    }
 
-   public void ParseFile() {
+   public void parseFile() {
      try {
       BufferedReader br = new BufferedReader(new FileReader(file_path));
       int patientRow = 1;
       while ((line = br.readLine()) != null) {
         String[] row = line.split(splitBy);
-        ParsePatient(patientRow, row);
+        parsePatient(patientRow, row);
         patientRow++;
       }
       System.out.println();
@@ -50,34 +50,34 @@ public class FileHandler {
     }
    }
 
-   private void ParseHeaders(String[] row) {
+   private void parseHeaders(String[] row) {
      headers = new Headers(start_col, sort_col, row);
      headers.parseHeaders();
      col_headers = headers.getHeaders();
    }
 
-   private void ParsePatient(int patientRow, String[] row) {
+   private void parsePatient(int patientRow, String[] row) {
      if (got_headers) {
        Patient patient = new Patient(patientRow, row, headers.getInfoIndex(), headers.getmaxIndex(), headers.getComparisonIndex(), headers.getRawHeaderIndexes());
        patient.parsePatient();
        patient.sortData();
        patients.add(patient);
      } else {
-       ParseHeaders(row);
+       parseHeaders(row);
        got_headers = true;
      }
    }
 
-   public void WriteFile() {
+   public void writeFile() {
      String newFileName = "data/" + getDateTime() + ".csv";
      try (PrintWriter writer = new PrintWriter(new File(newFileName))) {
 
       StringBuilder sb = new StringBuilder();
 
-      BuildString(sb, col_headers);
+      buildString(sb, col_headers);
 
       for (Patient patient : patients) {
-        BuildString(sb, patient.getPatientData());
+        buildString(sb, patient.getPatientData());
       }
 
       writer.write(sb.toString());
@@ -93,7 +93,7 @@ public class FileHandler {
     return dateFormat.format(date);
    }
 
-   private void BuildString(StringBuilder sb, ArrayList<String> data_array) {
+   private void buildString(StringBuilder sb, ArrayList<String> data_array) {
      String prefix = "";
      for (String data : data_array) {
       sb.append(prefix);
