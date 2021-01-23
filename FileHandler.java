@@ -68,8 +68,13 @@ public class FileHandler {
      }
    }
 
-   public void analysis() {
-     
+   public void analysis(int consecutiveYears) {
+     for (Patient patient : patients) {
+       if (!patient.checkConsecutive(consecutiveYears)) {
+         // if false remove patient
+         System.out.println(patient.checkConsecutive(consecutiveYears));
+       }
+     }
    }
 
    public void writeFile(String name) {

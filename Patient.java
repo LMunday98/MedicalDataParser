@@ -79,24 +79,28 @@ public class Patient {
 
   public void sortData() {
     System.out.println("Patient row number: " + patientRow);
-
-
-
-
-
-    //Collections.sort(patientData, new PatientData.compareTo());
     Collections.sort(patientData, new Comparator<PatientData>() {
       public int compare(PatientData o1, PatientData o2) {
           return o1.getDateTime().compareTo(o2.getDateTime());
       }
     });
 
-
-
-
     for (PatientData pd : patientData) {
       System.out.println("String: " + pd.getStringDate() + ", Conversion: "  + pd.getDateTime());
     }
+  }
+
+  public boolean checkConsecutive(int consecutiveYears) {
+    ArrayList<Integer> years = new ArrayList<Integer>();
+    System.out.print("Patient row number: " + patientRow + " - ");
+    for (PatientData cluster : patientData) {
+      String date = cluster.getStringDate();
+      String[] dateParts = date.split("/");
+      String stringYear = dateParts[2];
+      System.out.print(stringYear + " ");
+    }
+    System.out.println();
+    return true;
   }
 
   public ArrayList<String> getPatientData() {
