@@ -1,10 +1,5 @@
-# Sam-MedData
-A Java data parser.
+# Medical Data Parser
 
-To compile the program, write in terminal:
+The following project is designed to read in a CSV data file and format the patient's data entries in chronological order and then assess which records have more than X number of consecutive years, the output of which is recorded in two separate files for manual assessment.
 
-javac *.java
-
-To run the program, write in terminal:
-
-java Main
+Some data clusters have a varying amount of fields, so the program dynamically assesses which fields are missing and adds them to the end file.
