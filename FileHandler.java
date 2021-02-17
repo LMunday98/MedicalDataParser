@@ -121,23 +121,11 @@ public class FileHandler {
             lrCount -= 2;
             lr = !lr;
           }
-          if (lr) {
-            freqHeader += "Left_";
-          } else {
-            freqHeader += "Right_";
-          }
+          if (lr) { freqHeader += "Left_"; } else { freqHeader += "Right_"; }
           // M / R
-          if (index < 4) {
-            freqHeader += "M_";
-          } else {
-            freqHeader += "R_";
-          }
+          if (index < 4) { freqHeader += "M_"; } else { freqHeader += "R_"; }
           // Value / Count
-          if (index % 2 == 0) {
-            freqHeader += "Value";
-          } else {
-            freqHeader += "Count";
-          }
+          if (index % 2 == 0) { freqHeader += "Value"; } else { freqHeader += "Count"; }
 
           freqHeaders.add(freqHeader);
           freqHeader = "";
