@@ -5,11 +5,10 @@ public class Main {
 
     FileHandler fh = new FileHandler("Encounterid", "Photograph_Date", "data.csv");
     fh.parseFile();
-    fh.writeFile("parsed/Parsed");
+    fh.writePatients("parsed/Parsed");
 
-    int numConsecYears = 3;
-    fh.analysis(numConsecYears);
-    fh.writeFile("analysis/Analysis");
+    fh.analysis();
+    fh.writePatients("analysis/Analysis");
 
     long stopTime = System.currentTimeMillis();
     long elapsedTime = stopTime - startTime;

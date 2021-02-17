@@ -23,6 +23,8 @@ public class FileHandler {
   private ArrayList<String> col_headers;
 
   private ArrayList<Patient> patients;
+  
+  private int consecutiveYears;
 
   public FileHandler(String _start_col, String _sort_col, String _file_name) {
     this.start_col = _start_col;
@@ -34,6 +36,7 @@ public class FileHandler {
 
     this.got_headers = false;
     this.patients = new ArrayList<Patient>();
+    this.consecutiveYears = 3;
   }
 
    public void parseFile() {
@@ -69,34 +72,17 @@ public class FileHandler {
    }
 
    public void calcFreq(Patient patient) {
-    System.out.println("- - - - - -\n" + patient.getRawData()[0] + "\n");
     ArrayList<PatientData> patientClusters = patient.getPatientClusters();
-
-    int count = 0;
-    for (PatientData cluster : patientClusters) {
-      System.out.println("Encounter: " + cluster.getEncounterId() + ", n-" + count);
-      Encounter encounter = cluster.getEncounter();
-      Grading gradings[] = encounter.getGradings();
-      for (Grading grading : gradings) {
-        System.out.print(grading.getGradingName() + ": " + grading.getGradingValue() + "\n");
-      }
-      System.out.println();
-      count++;
-    }
-
-    System.out.println("- - - - - -\n" + patient.getRawData()[0] + "\n");
     Collections.reverse(patientClusters);
 
-    count = 0;
     for (PatientData cluster : patientClusters) {
-      System.out.println("Encounter: " + cluster.getEncounterId() + ", n-" + count);
       Encounter encounter = cluster.getEncounter();
       Grading gradings[] = encounter.getGradings();
+      
       for (Grading grading : gradings) {
-        System.out.print(grading.getGradingName() + ": " + grading.getGradingValue() + "\n");
+        String gradingName = grading.getGradingName();
+        String gradingValue = grading.getGradingValue();
       }
-      System.out.println();
-      count++;
     }
 
 
@@ -106,7 +92,7 @@ public class FileHandler {
     
    }
 
-   public void analysis(int consecutiveYears) {
+   public void analysis() {
     ArrayList<Patient> consecPatients = new ArrayList<Patient>();
 
      for (Patient patient : patients) {
@@ -120,17 +106,23 @@ public class FileHandler {
      patients = consecPatients;
    }
 
-   public void writeFile(String name) {
-     String newFileName = "data/" + name + " " + getDateTime() + ".csv";
+   public void writePatients(String name) {
+    StringBuilder sb = new StringBuilder();
+    buildString(sb, col_headers);
 
-     try (PrintWriter writer = new PrintWriter(new File(newFileName))) {
-      StringBuilder sb = new StringBuilder();
-      buildString(sb, col_headers);
+    for (Patient patient : patients) {
+      buildString(sb, patient.getPatientData());
+    }
 
-      for (Patient patient : patients) {
-        buildString(sb, patient.getPatientData());
-      }
+    writeFile(sb, getFileName(name));
+   }
 
+   public String getFileName(String name) {
+    return "data/" + name + " " + getDateTime() + ".csv";
+   }
+
+   public void writeFile(StringBuilder sb, String fileName) {
+     try (PrintWriter writer = new PrintWriter(new File(fileName))) {
       writer.write(sb.toString());
     } catch (IOException e) {
       e.printStackTrace();
