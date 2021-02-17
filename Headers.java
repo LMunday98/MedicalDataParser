@@ -35,7 +35,6 @@ public class Headers {
     calcComparisonIndex();
     getInfoHeaders();
     formatDataHeaders();
-    echoFormattedHeaders();
   }
 
   private void getInfoHeaders() {
@@ -45,17 +44,12 @@ public class Headers {
   }
 
   private void formatDataHeaders() {
-    System.out.println("Raw header indexes: ");
-    for (int headerIndex : rawHeaderIndexes) {
-      System.out.print(headerIndex + " ");
-    }
-
     int startDataIndex = 0;
+
     for (int indexCount : rawHeaderIndexes) {
       if (indexCount != maxIndex) {
         startDataIndex = startDataIndex + indexCount;
       } else {
-        System.out.println("\n" + "Start data index: " + startDataIndex);
         break;
       }
     }
@@ -77,8 +71,8 @@ public class Headers {
         headerCounter = 0;
       }
       headerCounter++;
-      System.out.println("Header: " + header);
     }
+
     addHeader(headerCounter);
     getHeaderIndexes();
   }
@@ -93,28 +87,17 @@ public class Headers {
   }
 
   private void addHeader(int curHeader) {
-    System.out.println("Header count: " + curHeader + "\n");
     headerCountArray.add(curHeader);
   }
 
   private void getHeaderIndexes() {
-
     rawHeaderIndexes = new ArrayList<Integer>(headerCountArray);
 
     Collections.sort(headerCountArray);
     infoIndex = headerCountArray.get(0);
-    System.out.println("Info header index: " + infoIndex);
 
     Collections.reverse(headerCountArray);
     maxIndex = headerCountArray.get(0);
-    System.out.println("Max header index: " + maxIndex + "\n");
-  }
-
-  private void echoFormattedHeaders() {
-    System.out.println("\n" + "Formatted headers: ");
-    for (String header : headers) {
-      System.out.println(header);
-    }
   }
 
   public ArrayList<String> getHeaders() {

@@ -41,16 +41,11 @@ public class Patient {
   }
 
   private void parseData() {
-    System.out.println();
     int indexCount = info_index;
-
     int patientMax = patient_raw_data.length;
-    //System.out.print("Patient max: " + patientMax);
 
     for (int i = 1; i < raw_header_indexes.size(); i++) {
-
       ArrayList<String> parsedData = new ArrayList<String>();
-
       int lower = indexCount;
       int upper = indexCount + raw_header_indexes.get(i);
 
@@ -58,10 +53,7 @@ public class Patient {
         break;
       }
 
-      //System.out.print(" (Lower: " + lower + ", Upper: " + upper + ")");
-
       for (int j = lower; j < upper; j++) {
-        //System.out.println(patient_raw_data[j]);
         parsedData.add(patient_raw_data[j]);
       }
 
@@ -71,47 +63,68 @@ public class Patient {
 
       PatientData newCluster = new PatientData();
       newCluster.setData(parsedData);
+      newCluster.setEncounter(createEncounter(parsedData));
+      newCluster.setEncounterId(i);
       newCluster.parseDate(comparison_index);
       patientData.add(newCluster);
       indexCount = indexCount + raw_header_indexes.get(i);
+
+      createEncounter(parsedData);
     }
   }
 
+  private Encounter createEncounter(ArrayList<String> parsedData) {
+    String gradingValues[] = new String[4];
+
+    for (int i = 4; i < 8; i++) {
+      String gradingValue = parsedData.get(i);
+      String gradingString = "";
+      if (gradingValue.equals("")) {
+        
+        if (i <= 5) {
+          gradingString += "M";
+        } else {
+          gradingString += "R";
+        }
+
+        gradingString += "0";
+      } else {
+        gradingString += gradingValue;
+      }
+      gradingValues[i - 4] = gradingString;
+    }
+
+    return new Encounter(gradingValues);
+  }
+
   public void sortData() {
-    System.out.println("Patient row number: " + patientRow);
     Collections.sort(patientData, new Comparator<PatientData>() {
       public int compare(PatientData o1, PatientData o2) {
           return o1.getDateTime().compareTo(o2.getDateTime());
       }
     });
-
-    for (PatientData pd : patientData) {
-      System.out.println("String: " + pd.getStringDate() + ", Conversion: "  + pd.getDateTime());
-    }
   }
 
   public boolean checkConsecutive(int consecLimit) {
     ArrayList<Integer> years = getYears();
-
     int consecYearsCount = 1;
+
     for (int i = 1; i < years.size(); i++) {
       if (years.get(i) == years.get(i - 1) + 1) {
         consecYearsCount++;
+
         if (consecYearsCount == consecLimit) {
-          System.out.print("\n" + "Consec years: " + consecYearsCount);
           return true;
         }
+
       } else {
         consecYearsCount = 1;
       }
     }
-    System.out.print("\n" + "Consec years: " + consecYearsCount);
     return false;
   }
 
   private ArrayList<Integer> getYears() {
-    System.out.print("\n" + "Patient row number: " + patientRow + "\n");
-
     ArrayList<Integer> years = new ArrayList<Integer>();
 
     for (PatientData cluster : patientData) {
@@ -120,8 +133,8 @@ public class Patient {
       String stringYear = dateParts[2];
       int intYear = Integer.parseInt(stringYear);
       years.add(intYear);
-      System.out.print(stringYear + " ");
     }
+
     return years;
   }
 
@@ -144,6 +157,10 @@ public class Patient {
 
   public String[] getRawData() {
     return patient_raw_data;
+  }
+
+  public ArrayList<PatientData> getPatientClusters() {
+    return patientData;
   }
 
 }
