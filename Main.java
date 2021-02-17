@@ -9,6 +9,7 @@ public class Main {
 
     fh.analysis();
     fh.writePatients("analysis/Analysis");
+    fh.writeFrequency("frequency/Frequency");
 
     long stopTime = System.currentTimeMillis();
     long elapsedTime = stopTime - startTime;

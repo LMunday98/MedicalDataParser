@@ -106,6 +106,56 @@ public class FileHandler {
      patients = consecPatients;
    }
 
+   public ArrayList<String> genFreqHeaders(int encounterCount) {
+    ArrayList<String> freqHeaders = new ArrayList<String>();
+    String freqHeader = "";
+    Boolean lr = false;
+    int lrCount = 0;
+      for (int n = 0; n < (encounterCount - 1); n++) {
+        lrCount = 0;
+        for (int index = 0; index < 8; index++) {
+          // (n-0)
+          freqHeader += "(n-" + n + ")_";
+          // Left / Right
+            if (lrCount == 2) {
+            lrCount -= 2;
+            lr = !lr;
+          }
+          if (lr) {
+            freqHeader += "Left_";
+          } else {
+            freqHeader += "Right_";
+          }
+          // M / R
+          if (index < 4) {
+            freqHeader += "M_";
+          } else {
+            freqHeader += "R_";
+          }
+          // Value / Count
+          if (index % 2 == 0) {
+            freqHeader += "Value";
+          } else {
+            freqHeader += "Count";
+          }
+
+          freqHeaders.add(freqHeader);
+          freqHeader = "";
+          lrCount++;
+        }
+      }
+      return freqHeaders;
+   }
+
+   public void writeFrequency(String name) {
+    StringBuilder sb = new StringBuilder();
+
+    ArrayList<String> freqHeaders = genFreqHeaders(7);
+    buildString(sb, freqHeaders);
+
+    writeFile(sb, getFileName(name));
+   }
+
    public void writePatients(String name) {
     StringBuilder sb = new StringBuilder();
     buildString(sb, col_headers);
