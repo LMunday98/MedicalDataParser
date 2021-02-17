@@ -9,10 +9,11 @@ public class Grading {
     public Grading(String _gradingName, String _gradingValue) {
         this.gradingName = _gradingName;
         this.gradingValue = _gradingValue;
+        this.gradingCount = 0;
     }
 
-    public void setGradingCount(int count) {
-        this.gradingCount = count;
+    public void incGradingCount() {
+        gradingCount++;
     }
 
     public String getGradingName() {

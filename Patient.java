@@ -93,8 +93,9 @@ public class Patient {
       }
       gradingValues[i - 4] = gradingString;
     }
-
-    return new Encounter(gradingValues);
+    Encounter newEncounter = new Encounter();
+    newEncounter.createPatientGradings(gradingValues);
+    return newEncounter;
   }
 
   public void sortData() {
