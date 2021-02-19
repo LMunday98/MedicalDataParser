@@ -65,7 +65,7 @@ public class FileHandler {
    private void parsePatient(int patientRow, String[] row) {
      if (got_headers) {
        Patient patient = new Patient(patientRow, row, headers.getInfoIndex(), headers.getmaxIndex(), headers.getComparisonIndex(), headers.getRawHeaderIndexes());
-       patient.parsePatient();
+       patient.parse(encounters);
        patient.sortData();
        patients.add(patient);
      } else {

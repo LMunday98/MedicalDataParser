@@ -29,9 +29,9 @@ public class Patient {
     patientData = new ArrayList<PatientData>();
   }
 
-  public void parsePatient() {
+  public void parse(ArrayList<Encounter> encounters) {
     parseInfo();
-    parseData();
+    parseData(encounters);
   }
 
   private void parseInfo() {
@@ -40,9 +40,11 @@ public class Patient {
     }
   }
 
-  private void parseData() {
+  private void parseData(ArrayList<Encounter> encounters) {
     int indexCount = info_index;
     int patientMax = patient_raw_data.length;
+
+    ArrayList<DataCluster> patientClusters = new ArrayList<DataCluster>();
 
     for (int i = 1; i < raw_header_indexes.size(); i++) {
       ArrayList<String> parsedData = new ArrayList<String>();
@@ -67,12 +69,28 @@ public class Patient {
       patientData.add(newCluster);
       indexCount = indexCount + raw_header_indexes.get(i);
 
-      createEncounter(parsedData);
+      DataCluster patientCluster = new DataCluster(i, parsedData);
+      patientClusters.add(patientCluster);
     }
+    countGrading(encounters, patientClusters);
   }
 
-  private void createEncounter(ArrayList<String> parsedData) {
-    
+  private void countGrading(ArrayList<Encounter> encounters, ArrayList<DataCluster> patientClusters) {
+    Collections.reverse(patientClusters);
+    for(DataCluster cluster : patientClusters) {
+      int iteration = cluster.getIteration();
+      ArrayList<String> parsedData = cluster.getData();
+
+      String descCodes[] = new String[4];
+
+      descCodes[0] = parsedData.get(4);
+      descCodes[1] = parsedData.get(5);
+      descCodes[2] = parsedData.get(6);
+      descCodes[3] = parsedData.get(7);
+
+      System.out.println(iteration + " " + descCodes[0] + " " + descCodes[1] + " " + descCodes[2] + " " + descCodes[3]);
+    }
+    System.out.println();
   }
 
   public void sortData() {
