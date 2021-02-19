@@ -1,0 +1,56 @@
+(n-0)
+Left M Value,Left M Count,Right M Value,Right M Count,Left R Value,Left R Count,Right R Value,Right R Count
+M0,400,M0,384,R0,91,R0,86
+M1,76,M1,92,R1,323,R1,334
+,,,,R2,42,R2,35
+,,,,R3,8,R3,10
+,,,,R3A,2,R3A,2
+,,,,R3S,10,R3S,9
+(n-1)
+Right M Value,Right M Count,Left M Value,Left M Count,Right R Value,Right R Count,Left R Value,Left R Count
+M0,388,M0,391,R0,84,R0,85
+M1,87,M1,84,R1,334,R1,340
+,,,,R2,42,R2,31
+,,,,R3,7,R3,10
+,,,,R3A,2,R3A,1
+,,,,R3S,6,R3S,8
+(n-2)
+Left M Value,Left M Count,Right M Value,Right M Count,Left R Value,Left R Count,Right R Value,Right R Count
+M0,351,M0,341,R0,61,R0,58
+M1,118,M1,128,R1,317,R1,323
+,,,,R2,67,R2,66
+,,,,R3,14,R3,11
+,,,,R3A,1,R3A,3
+,,,,R3S,9,R3S,8
+(n-3)
+Right M Value,Right M Count,Left M Value,Left M Count,Right R Value,Right R Count,Left R Value,Left R Count
+M0,270,M0,250,R0,48,R0,47
+M1,66,M1,86,R1,246,R1,244
+,,,,R2,34,R2,35
+,,,,R3,3,R3,4
+,,,,R3A,0,R3A,1
+,,,,R3S,5,R3S,5
+(n-4)
+Left M Value,Left M Count,Right M Value,Right M Count,Left R Value,Left R Count,Right R Value,Right R Count
+M0,183,M0,172,R0,32,R0,35
+M1,54,M1,65,R1,175,R1,175
+,,,,R2,25,R2,21
+,,,,R3,2,R3,2
+,,,,R3A,1,R3A,1
+,,,,R3S,2,R3S,3
+(n-5)
+Right M Value,Right M Count,Left M Value,Left M Count,Right R Value,Right R Count,Left R Value,Left R Count
+M0,136,M0,140,R0,32,R0,28
+M1,28,M1,24,R1,118,R1,123
+,,,,R2,14,R2,11
+,,,,R3,0,R3,1
+,,,,R3A,0,R3A,0
+,,,,R3S,0,R3S,1
+(n-6)
+Left M Value,Left M Count,Right M Value,Right M Count,Left R Value,Left R Count,Right R Value,Right R Count
+M0,67,M0,65,R0,0,R0,0
+M1,64,M1,66,R1,112,R1,108
+,,,,R2,18,R2,22
+,,,,R3,0,R3,0
+,,,,R3A,1,R3A,1
+,,,,R3S,0,R3S,0
