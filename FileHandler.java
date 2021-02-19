@@ -82,7 +82,6 @@ public class FileHandler {
        if (isConsec) {
          consecPatients.add(patient);
         }
-       calcFreq(patient);
        patientCount++;
        if (patientCount == -1) {
          break;
@@ -90,10 +89,6 @@ public class FileHandler {
      }
 
      patients = consecPatients;
-   }
-
-   public void calcFreq(Patient patient) {
-
    }
 
    public void genFreqHeaders(int encounterCount) {
@@ -104,21 +99,18 @@ public class FileHandler {
         ArrayList<String> headers = new ArrayList<>();
         lrCount = 0;
         for (int index = 0; index < 8; index++) {
-          // (n-0)
-          freqHeader += "(n-" + n + ")_";
           // Left / Right
             if (lrCount == 2) {
             lrCount -= 2;
             lr = !lr;
           }
-          if (lr) { freqHeader += "Right_"; } else { freqHeader += "Left_"; }
+          if (lr) { freqHeader += "Right "; } else { freqHeader += "Left "; }
           // M / R
-          if (index < 4) { freqHeader += "M_"; } else { freqHeader += "R_"; }
+          if (index < 4) { freqHeader += "M "; } else { freqHeader += "R "; }
           // Value / Count
           if (index % 2 == 0) { freqHeader += "Value"; } else { freqHeader += "Count"; }
 
           headers.add(freqHeader);
-
           
           freqHeader = "";
           lrCount++;
@@ -132,10 +124,33 @@ public class FileHandler {
    public void writeFrequency(String name) {
     StringBuilder sb = new StringBuilder();
 
-   
+   int iteration = 0;
     for (Encounter encounter : encounters) {
       ArrayList<String> iterationHeadings = encounter.getHeaders();
+      sb.append("(n-" + iteration + ")\n");
       buildString(sb, iterationHeadings);
+
+      for (int gradingLine = 0; gradingLine < 6; gradingLine++) {
+        ArrayList<Grading> gradings = encounter.getGradings();
+        ArrayList<String> gradingLineData = new ArrayList<>();
+        for (Grading grading : gradings) {
+          ArrayList<GradingDesc> gradingDescs = grading.getDesc();
+
+          GradingDesc currentDesc = gradingDescs.get(gradingLine);
+
+          String descCode = currentDesc.getDescCode();
+          String descCount = Integer.toString(currentDesc.getDescCount());
+
+          if (descCode.isEmpty()) {
+            descCount = "";
+          }
+          
+          gradingLineData.add(descCode);
+          gradingLineData.add(descCount);
+        }
+        buildString(sb, gradingLineData);
+      }
+      iteration++;
     }
     
     
