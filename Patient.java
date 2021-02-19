@@ -72,25 +72,68 @@ public class Patient {
       DataCluster patientCluster = new DataCluster(i, parsedData);
       patientClusters.add(patientCluster);
     }
-    countGrading(encounters, patientClusters);
+    parseGradings(encounters, patientClusters);
   }
 
-  private void countGrading(ArrayList<Encounter> encounters, ArrayList<DataCluster> patientClusters) {
+  private void parseGradings(ArrayList<Encounter> encounters, ArrayList<DataCluster> patientClusters) {
     Collections.reverse(patientClusters);
+    int iterationCounter = 0;
     for(DataCluster cluster : patientClusters) {
-      int iteration = cluster.getIteration();
       ArrayList<String> parsedData = cluster.getData();
+      String descCodes[] = getDescCodes(parsedData);
 
-      String descCodes[] = new String[4];
+      countGradings(iterationCounter, encounters, descCodes);
+      iterationCounter++;
+    }
+  }
 
-      descCodes[0] = parsedData.get(4);
-      descCodes[1] = parsedData.get(5);
-      descCodes[2] = parsedData.get(6);
-      descCodes[3] = parsedData.get(7);
+  private String[] getDescCodes(ArrayList<String> parsedData) {
+    String descCodes[] = new String[4];
+    for (int i = 0; i < 4; i++) {
+      String descCode = parsedData.get(i+4);
+      if (descCode.equals("")) { if (i < 2) { descCode = "M0"; } else { descCode = "R0"; }       }
+      descCodes[i] = descCode;
+    }
+    return descCodes;
+  }
 
-      System.out.println(iteration + " " + descCodes[0] + " " + descCodes[1] + " " + descCodes[2] + " " + descCodes[3]);
+  private void countGradings(int iteration, ArrayList<Encounter> encounters, String descCodes[]) {
+    for (String descCode : descCodes) {
+      int gradingIndex = getGradingIndex(descCode);
+      System.out.print(descCode + " " + gradingIndex + ", ");
     }
     System.out.println();
+  }
+
+  private int getGradingIndex(String descCode) {
+    switch (descCode) {
+      case "M0":
+        return 0;
+
+      case "M1":
+        return 1;
+
+      case "R0":
+        return 0;
+
+      case "R1":
+        return 1;
+
+      case "R2":
+        return 2;
+
+      case "R3":
+        return 3;
+
+      case "R3A":
+        return 4;
+
+      case "R3S":
+        return 5;
+        
+      default:
+        return -1;
+    }
   }
 
   public void sortData() {
