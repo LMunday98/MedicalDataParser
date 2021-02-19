@@ -5,49 +5,33 @@ public class Encounter {
     private ArrayList<Grading> gradings;
     private ArrayList<String> encounterHeadings;
 
+    private String gradingTitles[];
+    private String descCodesM[];
+    private String descCodesR[];
+
     public Encounter() {
         gradings = new ArrayList<Grading>();
         encounterHeadings = new ArrayList<String>();
+
+        gradingTitles = new String[] {"LEFT_M", "RIGHT_M", "LEFT_R", "RIGHT_R"};
+        descCodesM = new String[] {"M0", "M1", "", "", "", ""};
+        descCodesR = new String[] {"R0", "R1", "R2",  "R3", "R3A", "R3S"};
 
         createGradings();
     }
 
     private void createGradings() {
-        Grading g1 = new Grading("LEFT_M");
-        g1.createDesc("M0");
-        g1.createDesc("M1");
-        g1.createDesc("");
-        g1.createDesc("");
-        g1.createDesc("");
-        g1.createDesc("");
-        gradings.add(g1);
+        for (int i = 0; i < 4; i++) {
+            Grading newGrading = new Grading(gradingTitles[i]);
+            if (i < 2) { createDescriptions(newGrading, descCodesM); } else { createDescriptions(newGrading, descCodesR); }
+            gradings.add(newGrading);
+        }
+    }
 
-        Grading g2 = new Grading("RIGHT_M");
-        g2.createDesc("M0");
-        g2.createDesc("M1");
-        g2.createDesc("");
-        g2.createDesc("");
-        g2.createDesc("");
-        g2.createDesc("");
-        gradings.add(g2);
-
-        Grading g3 = new Grading("LEFT_R");
-        g3.createDesc("R0");
-        g3.createDesc("R1");
-        g3.createDesc("R2");
-        g3.createDesc("R3");
-        g3.createDesc("R3A");
-        g3.createDesc("R3S");
-        gradings.add(g3);
-
-        Grading g4 = new Grading("LEFT_R");
-        g4.createDesc("R0");
-        g4.createDesc("R1");
-        g4.createDesc("R2");
-        g4.createDesc("R3");
-        g4.createDesc("R3A");
-        g4.createDesc("R3S");
-        gradings.add(g4);
+    private void createDescriptions(Grading grading, String[] descCodes) {
+        for (String descCode : descCodes) {
+            grading.createDesc(descCode);
+        }
     }
 
     public void setHeadings(ArrayList<String> _headings) {

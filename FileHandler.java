@@ -39,7 +39,7 @@ public class FileHandler {
     this.got_headers = false;
     this.patients = new ArrayList<Patient>();
     this.encounters = new ArrayList<Encounter>();
-    genFreqHeaders(7);
+    genEncounterHeaders(7);
   }
 
    public void parseFile() {
@@ -76,22 +76,14 @@ public class FileHandler {
 
    public void analysis() {
     ArrayList<Patient> consecPatients = new ArrayList<Patient>();
-    int patientCount = 0;
      for (Patient patient : patients) {
        Boolean isConsec = patient.checkConsecutive(consecutiveYears);
-       if (isConsec) {
-         consecPatients.add(patient);
-        }
-       patientCount++;
-       if (patientCount == -1) {
-         break;
-       }
+       if (isConsec) { consecPatients.add(patient); }
      }
-
      patients = consecPatients;
    }
 
-   public void genFreqHeaders(int encounterCount) {
+   public void genEncounterHeaders(int encounterCount) {
     String freqHeader = "";
     Boolean lr = false;
     int lrCount = 0;
