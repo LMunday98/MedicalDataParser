@@ -11,8 +11,6 @@ import java.text.SimpleDateFormat;
 
 public class FileHandler {
   private int consecutiveYears;
-  private int clusterCount;
-  private int createCount;
 
   private String start_col;
   private String sort_col;
@@ -26,14 +24,10 @@ public class FileHandler {
   private ArrayList<String> col_headers;
 
   private ArrayList<Patient> patients;
-  private Encounter freqEncounters[];
+  private ArrayList<Encounter> encounters;
   
-
-
   public FileHandler(String _start_col, String _sort_col, String _file_name) {
     this.consecutiveYears = 3;
-    this.clusterCount = 0;
-    this.createCount = 0;
 
     this.start_col = _start_col;
     this.sort_col = _sort_col;
@@ -44,14 +38,8 @@ public class FileHandler {
 
     this.got_headers = false;
     this.patients = new ArrayList<Patient>();
-    this.freqEncounters = new Encounter[7];
-    setupFreqEncounters();
-  }
-
-  public void setupFreqEncounters() {
-    for (int i = 0; i < 7; i++) {
-      freqEncounters[i] = new Encounter();
-    }
+    this.encounters = new ArrayList<Encounter>();
+    genFreqHeaders(7);
   }
 
    public void parseFile() {
@@ -86,61 +74,34 @@ public class FileHandler {
      }
    }
 
-   public void calcFreq(Patient patient) {
-    clusterCount = 0;
-    ArrayList<PatientData> patientClusters = patient.getPatientClusters();
-    for (PatientData cluster : patientClusters) {
-      Encounter patientEncounter = cluster.getEncounter();
-      ArrayList<Grading> patientClusterGradings = patientEncounter.getGradings();
-      for (Grading patientGrading : patientClusterGradings) {
-        String patientGradingName = patientGrading.getGradingName();
-        String patientGradingValue = patientGrading.getGradingValue();
-        Encounter freqEncounter = freqEncounters[clusterCount];
-
-        if (!freqEncounter.checkGradingExists(patientGradingName, patientGradingValue)) {
-
-          System.out.println(" False");
-          //System.out.println(createCount + " Create: (n-" + clusterCount + ") " + patientGradingName + " " + patientGradingValue);
-          createFreqGrad(patientGradingName, patientGradingValue);
-          createCount++;
-        } 
-      }
-      clusterCount++;
-    }
-
-    clusterCount = 0;
-    for (Encounter freqEncounter : freqEncounters) {
-      freqEncounter.genCounts();
-      clusterCount++;
-    }
-   }
-
-   public void createFreqGrad(String patientGradingName, String patientGradingValue) {
-    Grading newGrading = new Grading(patientGradingName, patientGradingValue);
-    newGrading.incGradingCount();
-    freqEncounters[clusterCount].addGrading(newGrading);
-   }
-
    public void analysis() {
     ArrayList<Patient> consecPatients = new ArrayList<Patient>();
-
+    int patientCount = 0;
      for (Patient patient : patients) {
        Boolean isConsec = patient.checkConsecutive(consecutiveYears);
        if (isConsec) {
          consecPatients.add(patient);
         }
        calcFreq(patient);
+       patientCount++;
+       if (patientCount == -1) {
+         break;
+       }
      }
 
      patients = consecPatients;
    }
 
-   public ArrayList<String> genFreqHeaders(int encounterCount) {
-    ArrayList<String> freqHeaders = new ArrayList<String>();
+   public void calcFreq(Patient patient) {
+
+   }
+
+   public void genFreqHeaders(int encounterCount) {
     String freqHeader = "";
     Boolean lr = false;
     int lrCount = 0;
-      for (int n = 0; n < (encounterCount - 1); n++) {
+      for (int n = 0; n < (encounterCount); n++) {
+        ArrayList<String> headers = new ArrayList<>();
         lrCount = 0;
         for (int index = 0; index < 8; index++) {
           // (n-0)
@@ -150,30 +111,34 @@ public class FileHandler {
             lrCount -= 2;
             lr = !lr;
           }
-          if (lr) { freqHeader += "Left_"; } else { freqHeader += "Right_"; }
+          if (lr) { freqHeader += "Right_"; } else { freqHeader += "Left_"; }
           // M / R
           if (index < 4) { freqHeader += "M_"; } else { freqHeader += "R_"; }
           // Value / Count
           if (index % 2 == 0) { freqHeader += "Value"; } else { freqHeader += "Count"; }
 
-          freqHeaders.add(freqHeader);
+          headers.add(freqHeader);
+
+          
           freqHeader = "";
           lrCount++;
         }
+        Encounter newEncounter = new Encounter();
+        newEncounter.setHeadings(headers);
+        encounters.add(newEncounter);
       }
-      return freqHeaders;
    }
 
    public void writeFrequency(String name) {
     StringBuilder sb = new StringBuilder();
 
-    ArrayList<String> freqHeaders = genFreqHeaders(7);
-    buildString(sb, freqHeaders);
-
-    for (Encounter freqEncounter : freqEncounters) {
-      buildString(sb, freqEncounter.getGradingCount());
+   
+    for (Encounter encounter : encounters) {
+      ArrayList<String> iterationHeadings = encounter.getHeaders();
+      buildString(sb, iterationHeadings);
     }
-
+    
+    
     writeFile(sb, getFileName(name));
    }
 
@@ -184,7 +149,7 @@ public class FileHandler {
     for (Patient patient : patients) {
       buildString(sb, patient.getPatientData());
     }
-
+    
     writeFile(sb, getFileName(name));
    }
 

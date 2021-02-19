@@ -63,8 +63,6 @@ public class Patient {
 
       PatientData newCluster = new PatientData();
       newCluster.setData(parsedData);
-      newCluster.setEncounter(createEncounter(parsedData));
-      newCluster.setEncounterId(i);
       newCluster.parseDate(comparison_index);
       patientData.add(newCluster);
       indexCount = indexCount + raw_header_indexes.get(i);
@@ -73,29 +71,8 @@ public class Patient {
     }
   }
 
-  private Encounter createEncounter(ArrayList<String> parsedData) {
-    String gradingValues[] = new String[4];
-
-    for (int i = 4; i < 8; i++) {
-      String gradingValue = parsedData.get(i);
-      String gradingString = "";
-      if (gradingValue.equals("")) {
-        
-        if (i <= 5) {
-          gradingString += "M";
-        } else {
-          gradingString += "R";
-        }
-
-        gradingString += "0";
-      } else {
-        gradingString += gradingValue;
-      }
-      gradingValues[i - 4] = gradingString;
-    }
-    Encounter newEncounter = new Encounter();
-    newEncounter.createPatientGradings(gradingValues);
-    return newEncounter;
+  private void createEncounter(ArrayList<String> parsedData) {
+    
   }
 
   public void sortData() {

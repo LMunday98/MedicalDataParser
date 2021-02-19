@@ -12,19 +12,9 @@ public class PatientData implements Comparable<PatientData> {
   private ArrayList<String> data;
   private Date comparisonDate;
   private String stringDate;
-  private Encounter encounter;
-  private int encounterId;
 
   public void setData(ArrayList<String> _data) {
     this.data = _data;
-  }
-
-  public void setEncounter(Encounter _encounter) {
-    this.encounter = _encounter;
-  }
-
-  public void setEncounterId(int id) {
-    this.encounterId = id;
   }
 
   public void parseDate(int _comparisonIndex) {
@@ -47,14 +37,6 @@ public class PatientData implements Comparable<PatientData> {
 
   public Date getDateTime() {
     return comparisonDate;
-  }
-
-  public Encounter getEncounter() {
-    return encounter;
-  }
-
-  public int getEncounterId() {
-    return encounterId;
   }
 
   @Override
