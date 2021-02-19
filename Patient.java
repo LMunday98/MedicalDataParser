@@ -113,34 +113,20 @@ public class Patient {
   }
 
   private int getDescIndex(String descCode) {
-    switch (descCode) {
-      case "M0":
-        return 0;
 
-      case "M1":
-        return 1;
-
-      case "R0":
-        return 0;
-
-      case "R1":
-        return 1;
-
-      case "R2":
-        return 2;
-
-      case "R3":
-        return 3;
-
-      case "R3A":
-        return 4;
-
-      case "R3S":
-        return 5;
-        
-      default:
-        return -1;
-    }
+    if (descCode.length() == 2) {
+      String code = descCode.substring(1);
+      return Integer.parseInt(code);
+    } else {
+      switch (descCode) {
+        case "R3A":
+          return 4;
+        case "R3S":
+          return 5;
+        default:
+          return -1;
+      }
+    } 
   }
 
   public void sortData() {
