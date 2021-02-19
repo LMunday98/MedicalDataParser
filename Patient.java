@@ -97,15 +97,22 @@ public class Patient {
     return descCodes;
   }
 
-  private void countGradings(int iteration, ArrayList<Encounter> encounters, String descCodes[]) {
+  private void countGradings(int encounterIteration, ArrayList<Encounter> encounters, String descCodes[]) {
+    int gradingIndex = 0;
+    Encounter encounter = encounters.get(encounterIteration);
+
     for (String descCode : descCodes) {
-      int gradingIndex = getGradingIndex(descCode);
-      System.out.print(descCode + " " + gradingIndex + ", ");
+      int descIndex = getDescIndex(descCode);
+
+      Grading grading = encounter.getGradings().get(gradingIndex);
+      GradingDesc desc = grading.getDesc().get(descIndex);
+
+      desc.incDescCount();
+      gradingIndex++;
     }
-    System.out.println();
   }
 
-  private int getGradingIndex(String descCode) {
+  private int getDescIndex(String descCode) {
     switch (descCode) {
       case "M0":
         return 0;

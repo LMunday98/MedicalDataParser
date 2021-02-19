@@ -8,6 +8,10 @@ public class GradingDesc {
         this.count = 0;
     }
 
+    public void incDescCount() {
+        count++;
+    }
+
     public String getDescCode() {
         return descCode;
     }
