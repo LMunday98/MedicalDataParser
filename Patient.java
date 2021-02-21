@@ -76,7 +76,7 @@ public class Patient {
   }
 
   private void parseGradings(ArrayList<Encounter> encounters, ArrayList<DataCluster> patientClusters) {
-    //Collections.reverse(patientClusters);
+    Collections.reverse(patientClusters);
     int iterationCounter = 0;
     for(DataCluster cluster : patientClusters) {
       ArrayList<String> parsedData = cluster.getData();
