@@ -76,7 +76,7 @@ public class Patient {
   }
 
   private void parseGradings(ArrayList<Encounter> encounters, ArrayList<DataCluster> patientClusters) {
-    Collections.reverse(patientClusters);
+    //Collections.reverse(patientClusters);
     int iterationCounter = 0;
     for(DataCluster cluster : patientClusters) {
       ArrayList<String> parsedData = cluster.getData();
@@ -91,6 +91,7 @@ public class Patient {
     String descCodes[] = new String[4];
     for (int i = 0; i < 4; i++) {
       String descCode = parsedData.get(i+4);
+      System.out.println(descCode + " ");
       if (descCode.equals("")) { if (i < 2) { descCode = "M0"; } else { descCode = "R0"; }       }
       descCodes[i] = descCode;
     }
@@ -113,7 +114,6 @@ public class Patient {
   }
 
   private int getDescIndex(String descCode) {
-
     if (descCode.length() == 2) {
       String code = descCode.substring(1);
       return Integer.parseInt(code);
